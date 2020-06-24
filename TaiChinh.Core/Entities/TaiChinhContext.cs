@@ -143,12 +143,20 @@ namespace TaiChinh.Core.Entities
                 entity.Property(e => e.Money).HasColumnType("decimal(18, 0)");
 
                 entity.Property(e => e.Name).HasMaxLength(400);
+
+                entity.HasOne(d => d.TaiKhoan)
+                    .WithMany(p => p.Chi)
+                    .HasForeignKey(d => d.TaiKhoanId)
+                    .HasConstraintName("FK_Chi_TaiKhoan");
+
+                entity.HasOne(d => d.TyLe)
+                    .WithMany(p => p.Chi)
+                    .HasForeignKey(d => d.TyLeId)
+                    .HasConstraintName("FK_Chi_TyLe");
             });
 
             modelBuilder.Entity<TaiKhoan>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Money).HasColumnType("decimal(18, 0)");
 
                 entity.Property(e => e.Name).HasMaxLength(400);
@@ -163,6 +171,16 @@ namespace TaiChinh.Core.Entities
                 entity.Property(e => e.Money).HasColumnType("decimal(18, 0)");
 
                 entity.Property(e => e.Name).HasMaxLength(400);
+
+                entity.HasOne(d => d.TaiKhoan)
+                    .WithMany(p => p.Thu)
+                    .HasForeignKey(d => d.TaiKhoanId)
+                    .HasConstraintName("FK_Thu_TaiKhoan");
+
+                entity.HasOne(d => d.TyLe)
+                    .WithMany(p => p.Thu)
+                    .HasForeignKey(d => d.TyLeId)
+                    .HasConstraintName("FK_Thu_TyLe");
             });
 
             modelBuilder.Entity<TyLe>(entity =>
