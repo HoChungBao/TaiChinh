@@ -12,5 +12,8 @@ namespace TaiChinh.Core.Interface
         TaiKhoan DeleteTaiKhoan(TaiKhoan entity);
         TaiKhoan GetTaiKhoanById(long id);
         List<TaiKhoan> GetAllTaiKhoan();
+
+        //Lấy tài khoản bao gồm thu chi
+        TaiKhoan GetTaiKhoanThuChiById(long id);
     }
 }

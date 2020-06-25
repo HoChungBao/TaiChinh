@@ -15,5 +15,6 @@ namespace TaiChinh.Core.Interface
 
         //Lấy tất cả tiền thu
         List<Thu> GetThuFromTo(DateTime dateF, DateTime dateT);
+      
     }
 }

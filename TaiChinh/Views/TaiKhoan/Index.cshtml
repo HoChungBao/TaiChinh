@@ -1,4 +1,5 @@
 ﻿@model List<TaiChinh.Core.Entities.TaiKhoan>
+@using TaiChinh.Util
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -69,35 +70,38 @@
                                         <tbody>
                                             @foreach (var item in Model)
                                             {
-                                            <tr>
-                                                <td>@item.Name</td>
-                                                <td>@item.NumberAccount</td>
-                                                <td>@item.Money</td>
-                                                <td>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            @if (item.IsCash ?? false)
-                                                            {
-                                                                <input type="checkbox" class="flat" name="IsCash">
-                                                            }
-                                                            else
-                                                            {
-                                                                <input type="checkbox" class="flat" name="IsCash">
-                                                            }
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                                        <ul class="dropdown-menu" role="menu">
-                                                            <li>
-                                                                <a class="dropdown-item" href="@Url.Action("Update", new { Id = item.Id })">Update</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                <tr>
+                                                    <td>@item.Name</td>
+                                                    <td>@item.NumberAccount</td>
+                                                    <td>@UtilString.GetMoney(item.Money)</td>
+                                                    <td>
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                @if (item.IsCash ?? false)
+                                                                {
+                                                                    <input type="checkbox" class="flat" name="IsCash" checked>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input type="checkbox" class="flat" name="IsCash">
+                                                                }
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                                            <ul class="dropdown-menu" role="menu">
+                                                                <li>
+                                                                    <a class="dropdown-item" href="@Url.Action("Update", new { Id = item.Id })">Update</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="dropdown-item" href="@Url.Action("ThuChi", new { Id = item.Id })">Chi tiết</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                             }
                                         </tbody>
                                     </table>

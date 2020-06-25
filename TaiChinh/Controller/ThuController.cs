@@ -45,7 +45,7 @@ namespace TaiChinh
                 taiKhoan.Money += model.Money;
                 _taiKhoanService.UpdateTaiKhoan(taiKhoan);
                 _thuService.InsertThu(thu);
-                return View("Create", thu);
+                return View(thu);
             }
             catch (Exception)
             {

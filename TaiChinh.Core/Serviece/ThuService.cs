@@ -36,7 +36,7 @@ namespace TaiChinh.Core.Serviece
 
         public List<Thu> GetThuFromTo(DateTime dateF, DateTime dateT)
         {
-            return _context.Thu.Include(x=>x.TaiKhoan).Where(x => x.DateCreate >= dateF && dateT >= x.DateCreate).ToList();
+            return _context.Thu.Include(x=>x.TaiKhoan).Where(x => x.DateCreate.Value.Date >= dateF.Date && dateT.Date >= x.DateCreate.Value.Date).ToList();
         }
 
         public Thu InsertThu(Thu entity)

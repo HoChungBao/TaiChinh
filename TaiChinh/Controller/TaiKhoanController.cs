@@ -66,7 +66,7 @@ namespace TaiChinh
                 taiKhoan.Money = model.Money;
                 taiKhoan.IsCash = model.IsCash;
                 _taiKhoanService.UpdateTaiKhoan(taiKhoan);
-                return View("Update", taiKhoan);
+                return View(taiKhoan);
             }
             catch (Exception)
             {
@@ -82,6 +82,13 @@ namespace TaiChinh
             {
                 Result = true
             });
+        }
+
+        [HttpGet]
+        public IActionResult ThuChi(long id)
+        {
+            var taikhoan = _taiKhoanService.GetTaiKhoanThuChiById(id);
+            return View(taikhoan);
         }
 
     }

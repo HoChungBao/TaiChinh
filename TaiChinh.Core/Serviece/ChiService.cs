@@ -52,7 +52,7 @@ namespace TaiChinh.Core.Serviece
 
         public List<Chi> GetChiFromTo(DateTime dateF, DateTime dateT)
         {
-            return _context.Chi.Include(x => x.TaiKhoan).Include(x => x.TyLe).Where(x => x.DateCreate >= dateF && dateT >= x.DateCreate).OrderByDescending(x=>x.DateCreate).ToList();
+            return _context.Chi.Include(x => x.TaiKhoan).Include(x => x.TyLe).Where(x => x.DateCreate.Value.Date >= dateF.Date && dateT.Date >= x.DateCreate.Value.Date).OrderByDescending(x=>x.DateCreate).ToList();
         }
     }
 }

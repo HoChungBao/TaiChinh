@@ -46,7 +46,7 @@ namespace TaiChinh
                 taiKhoan.Money -= model.Money;
                 _taiKhoanService.UpdateTaiKhoan(taiKhoan);
                 _chiService.InsertChi(chi);
-                return View("Create", chi);
+                return View(chi);
             }
             catch (Exception)
             {
@@ -82,7 +82,7 @@ namespace TaiChinh
                     }
                     else
                     {
-                        return View("Update", chi);
+                        return View(chi);
                     }
                 }
                 else
@@ -93,7 +93,7 @@ namespace TaiChinh
                 taiKhoan.Money += chi.Money;
                 _chiService.UpdateChi(chi);
                 _taiKhoanService.UpdateTaiKhoan(taiKhoan);
-                return View("Update", chi);
+                return View(chi);
             }
             catch (Exception)
             {

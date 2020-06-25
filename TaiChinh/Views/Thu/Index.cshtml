@@ -1,4 +1,5 @@
 ﻿@model List<TaiChinh.Core.Entities.Thu>
+@using TaiChinh.Util
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,7 +9,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Users <small>Some examples to get you started</small></h3>
+                <h3>Tổng thu  @UtilString.GetMoney(Model.Sum(x => x.Money))</h3>
             </div>
 
             <div class="title_right">
@@ -72,8 +73,7 @@
                                             <tr>
                                                 <td>@item.Name</td>
                                                 <td>@item.TaiKhoan.Name</td>
-                                                <td>@item.Money</td>
-                                                <td>
+                                                <td>@UtilString.GetMoney(item.Money)</td>
                                                 <td>@item.DateCreate?.ToString("dd/MM/yyyy")</td>
                                                 <td>
                                                     <div class="dropdown">

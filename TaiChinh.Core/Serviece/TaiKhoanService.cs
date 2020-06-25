@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,6 +45,11 @@ namespace TaiChinh.Core.Serviece
             _context.TaiKhoan.Update(entity);
             _context.SaveChanges();
             return entity;
+        }
+
+        public TaiKhoan GetTaiKhoanThuChiById(long id)
+        {
+            return _context.TaiKhoan.Include(x=>x.Thu).Include(x => x.Chi).FirstOrDefault(x => x.Id == id);
         }
     }
 }

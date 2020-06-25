@@ -25,6 +25,7 @@ namespace TaiChinh.Core.ViewModel
         public decimal ToTalMoneyThuInToDay { get => MoneyThuInToDay.Sum(x => x.Money) ?? 0; }
         public decimal ToTalMoneyChiInMonth { get => MoneyChiInMonth.Sum(x => x.Money) ?? 0; }
         public decimal ToTalMoneyChiInToDay { get => MoneyChiInToDay.Sum(x => x.Money) ?? 0; }
+        public decimal ToTalMoneyChiToDay { get => MoneyThuInMonth.Sum(x => x.Money)/ DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month) ?? 0; }
 
     }
 }
