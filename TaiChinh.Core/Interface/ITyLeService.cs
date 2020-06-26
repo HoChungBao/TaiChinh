@@ -12,5 +12,8 @@ namespace TaiChinh.Core.Interface
         TyLe DeleteTyLe(TyLe entity);
         TyLe GetTyLeById(long id);
         List<TyLe> GetAllTyLe();
+        List<TyLe> GetAllTyLeByMonth();
+
+        void Insert();
     }
 }

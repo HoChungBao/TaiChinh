@@ -40,7 +40,7 @@ namespace TaiChinh
 
             tien.MoneyThuInToDay = GetMoneyThuInToDay();
 
-            tien.TyLeThuInMonth = GetTyLeMoney(tien.MoneyThuInMonth);
+            //tien.TyLeThuInMonth = GetTyLeMoney(tien.MoneyThuInMonth);
 
             //tien.TyLeThuInToDay = GetTyLeMoney(tien.MoneyThuInToDay);
 
@@ -54,10 +54,13 @@ namespace TaiChinh
             tien.MoneyChiInToDay = GetMoneyChiInToDay();
 
             //Tiền chi trong một tháng từng phần trăm
-            tien.TyLeChiInMonth = GetTyLeChi(tien.MoneyChiInMonth);
+            //tien.TyLeChiInMonth = GetTyLeChi(tien.MoneyChiInMonth);
 
             //Tiền chi trong một ngày từng  phần trăm
-            tien.TyLeChiInToDay = GetTyLeChi(tien.MoneyChiInToDay);
+            //tien.TyLeChiInToDay = GetTyLeChi(tien.MoneyChiInToDay);
+
+            tien.TyLe = GetTyLe();
+            tien.TyLeChi = GetTyLeChi(tien.ToTalMoneyThuInMonth, tien.ToTalMoneyChiToDay, tien.MoneyChiInMonth);
             return View(tien);
         }
 
@@ -100,42 +103,42 @@ namespace TaiChinh
         }
 
         //Lấy tiền thu được từng phần trăm
-        public List<TyLeMoney> GetTyLeMoney(List<Thu> money)
-        {
-            var listTyLeMoney = new List<TyLeMoney>();
-            GetTyLe().ForEach(x =>
-            {
-                money.Where(i => i.TyLeId == x.Id).Sum(i => i.Money);
-                var tyLeMoney = new TyLeMoney()
-                {
-                    Id = x.Id,
-                    Amount = x.Amount ?? 0,
-                    Name = x.Name,
-                    Money = money.Where(i => i.TyLeId == x.Id).Sum(i => i.Money)/x.Amount ?? 0,
-                };
-                listTyLeMoney.Add(tyLeMoney);
-            });
-            return listTyLeMoney;
-        }
+        //public List<TyLeMoney> GetTyLeMoney(List<Thu> money)
+        //{
+        //    var listTyLeMoney = new List<TyLeMoney>();
+        //    GetTyLe().ForEach(x =>
+        //    {
+        //        money.Where(i => i.TyLeId == x.Id).Sum(i => i.Money);
+        //        var tyLeMoney = new TyLeMoney()
+        //        {
+        //            Id = x.Id,
+        //            Amount = x.Amount ?? 0,
+        //            Name = x.Name,
+        //            Money = money.Where(i => i.TyLeId == x.Id).Sum(i => i.Money)/x.Amount ?? 0,
+        //        };
+        //        listTyLeMoney.Add(tyLeMoney);
+        //    });
+        //    return listTyLeMoney;
+        //}
 
         //Lấy tiền chi được từng phần trăm
-        public List<TyLeMoney> GetTyLeChi(List<Chi> money)
-        {
-            var listTyLeMoney = new List<TyLeMoney>();
-            GetTyLe().ForEach(x =>
-            {
-                money.Where(i => i.TyLeId == x.Id).Sum(i => i.Money);
-                var tyLeMoney = new TyLeMoney()
-                {
-                    Id=x.Id,
-                    Amount = x.Amount ?? 0,
-                    Name = x.Name,
-                    Money = money.Where(i => i.TyLeId == x.Id).Sum(i => i.Money)??0,
-                };
-                listTyLeMoney.Add(tyLeMoney);
-            });
-            return listTyLeMoney;
-        }
+        //public List<TyLeMoney> GetTyLeChi(List<Chi> money)
+        //{
+        //    var listTyLeMoney = new List<TyLeMoney>();
+        //    GetTyLe().ForEach(x =>
+        //    {
+        //        money.Where(i => i.TyLeId == x.Id).Sum(i => i.Money);
+        //        var tyLeMoney = new TyLeMoney()
+        //        {
+        //            Id=x.Id,
+        //            Amount = x.Amount ?? 0,
+        //            Name = x.Name,
+        //            Money = money.Where(i => i.TyLeId == x.Id).Sum(i => i.Money)??0,
+        //        };
+        //        listTyLeMoney.Add(tyLeMoney);
+        //    });
+        //    return listTyLeMoney;
+        //}
 
         //Lấy tiền được chi mỗi ngày
         public decimal GetAverageChiInDay(List<Chi> money)
@@ -146,7 +149,27 @@ namespace TaiChinh
         //Lấy tỷ lệ
         public List<TyLe> GetTyLe()
         {
-            return _tyLeService.GetAllTyLe();
+            return _tyLeService.GetAllTyLeByMonth();
         }
+        //Lấy tiền chi
+        public List<TyLeMoney> GetTyLeChi(decimal ToTalMoneyThuInMonth, decimal ToTalMoneyChiToDay,List<Chi> MoneyChiInMonth)
+        {
+            var listTyLeMoney = new List<TyLeMoney>();
+            GetTyLe().ForEach(x =>
+            {
+                //money.Where(i => i.TyLeId == x.Id).Sum(i => i.Money);
+                var tyLeMoney = new TyLeMoney()
+                {
+                    Name = x.Name,
+                    MoneyChiInMonth = (ToTalMoneyThuInMonth * x.Amount)/ 100, // Tiền được chi một tháng :Tổng tiền thu một tháng/tỷ lệ
+                    MoneyChiMonth = MoneyChiInMonth.Where(i => i.TyLeId == x.Id).Sum(i => i.Money), //*Tiền chi một tháng  :Tổng tiền chi một tháng
+                    MoneyChiInToDay = ToTalMoneyChiToDay,//Tiền được chi một ngày :Tổng tiền thu một ngày/tỷ lệ
+                    MoneyChiToDay = MoneyChiInMonth.Where(i => i.TyLeId == x.Id&&i.DateCreate.Value.Day==DateTime.Now.Day).Sum(i => i.Money),//Tiền chi một ngày :Tổng tiền chi một ngày
+                };
+                listTyLeMoney.Add(tyLeMoney);
+            });
+            return listTyLeMoney;
+        }
+
     }
 }

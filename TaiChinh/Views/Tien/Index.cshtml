@@ -32,16 +32,16 @@
                     <div class="count">@UtilString.GetMoney(Model.ToTalMoneyChiInMonth)</div>
                     <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i> </i></span>
                 </div>
-                <div class="col-md-4 col-sm-4  tile_stats_count">
-                    <span class="count_top">Thu một ngày</span>
+                @*<div class="col-md-4 col-sm-4  tile_stats_count">
+                    <span class="count_top">Thu hôm nay</span>
                     <div class="count">@UtilString.GetMoney(Model.ToTalMoneyThuInToDay)</div>
                     <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i></i></span>
-                </div>
-                <div class="col-md-4 col-sm-4  tile_stats_count">
-                    <span class="count_top">Chi một ngày</span>
+                </div>*@
+                @*<div class="col-md-4 col-sm-4  tile_stats_count">
+                    <span class="count_top">Chi hôm nay</span>
                     <div class="count">@UtilString.GetMoney(Model.ToTalMoneyChiInToDay)</div>
                     <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i></i></span>
-                </div>
+                </div>*@
                 <div class="col-md-4 col-sm-4  tile_stats_count">
                     <span class="count_top">Còn lại được chi trong một tháng</span>
                     <div class="count green">@UtilString.GetMoney((Model.ToTalMoneyThuInMonth - Model.ToTalMoneyChiInMonth))</div>
@@ -65,7 +65,7 @@
             <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Chi tiêu</h2>
+                        <h2>Chi tiêu hôm nay @UtilString.GetMoney(Model.ToTalMoneyChiInToDay)</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li>
                                 <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -108,7 +108,7 @@
                                                     <td>@item.TaiKhoan.Name</td>
                                                     <td>@UtilString.GetMoney(item.Money)</td>
                                                     <td>@item.TyLe.Name</td>
-                                                    <td>@item.DateCreate.ToString()</td>
+                                                    <td>@UtilString.GetDay(item.DateCreate)</td>
                                                     <td>
                                                         <div class="dropdown">
                                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-wrench"></i></a>
@@ -132,27 +132,73 @@
                                 </div>
 
                                 <div class="col-md-12 col-sm-12 ">
-                                    @foreach (var item in Model.TyLeChiInToDay)
-                                    {
-                                        <div>
-                                            <p>@item.Name</p>
-                                            @if (Model.TyLeThuInMonth.Where(x => item.Money > x.Money && item.Id == x.Id).Any())
+                                    <table class="table" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Tháng</th>
+                                                    <th></th>
+                                                    <th>Ngày</th>
+                                                    <th></th>   
+                                                  
+                                                </tr>
+                                            </thead>
+
+
+                                            <tbody>
+                                            @foreach (var item in Model.TyLeChi)
                                             {
-                                                <div class="">
-                                                    <span class="btn btn-danger">@UtilString.GetMoney(item.Money)</span>
-                                                    @*<div class="progress progress_sm" style="width: 1234%;">
+                                                <tr>
+                                                    <td>
+                                                        @item.Name
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="btn btn-info">@UtilString.GetMoney(item.MoneyChiInMonth)</span>
+                                                    </td>
+                                                    <td>
+                                                        @if (item.MoneyChiInMonth>item.MoneyChiMonth)
+                                                        {
+                                                            <span class="btn btn-info">@UtilString.GetMoney(item.MoneyChiMonth)</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="btn btn-danger">@UtilString.GetMoney(item.MoneyChiMonth)</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <span class="btn btn-info">@UtilString.GetMoney(item.MoneyChiInToDay)</span>
+                                                    </td>
+                                                    <td>
+                                                        @if (item.MoneyChiInToDay > item.MoneyChiToDay)
+                                                        {
+                                                            <span class="btn btn-info">@UtilString.GetMoney(item.MoneyChiToDay)</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="btn btn-danger">@UtilString.GetMoney(item.MoneyChiToDay)</span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                @*@if (Model.TyLeThuInMonth.Where(x => item.Money > x.Money && item.Id == x.Id).Any())
+                                                {
+                                                    <div class="">
+                                                        <span class="btn btn-danger">@UtilString.GetMoney(item.Money)</span>
+                                                        <div class="progress progress_sm" style="width: 1234%;">
                                                             <div class="progress-bar bg-danger" role="progressbar" data-transitiongoal="80" aria-valuenow="79" style="width: 80%;"></div>
-                                                        </div>*@
-                                                </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="">
+                                                        <span class="btn btn-danger">@UtilString.GetMoney(item.Money)</span>
+                                                    </div>
+                                                }*@
+
                                             }
-                                            else
-                                            {
-                                                <div class="">
-                                                    <span class="btn btn-danger">@UtilString.GetMoney(item.Money)</span>
-                                                </div>
-                                            }
-                                        </div>
-                                    }
+                                            </tbody>
+                                        </table>
                                 </div>
                             </div>
                         </div>
@@ -164,7 +210,7 @@
                                 <table id="datatable" class="table table-striped table-bordered" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>Tên</th>
+                                           <th>Ngày tạo</th>
                                             <th>Ngân hàng</th>
                                             <th>Tiền</th>
                                             <th>Tỷ lệ</th>
@@ -175,14 +221,14 @@
 
 
                                     <tbody>
-                                        @foreach (var item in Model.MoneyChiInMonth)
+                                        @foreach (var item in Model.MoneyThuInMonth)
                                         {
                                             <tr>
                                                 <td>@item.Name</td>
                                                 <td>@item.TaiKhoan.Name</td>
                                                 <td>@UtilString.GetMoney(item.Money)</td>
                                                 <td>@item.TyLe.Name</td>
-                                                <td>@item.DateCreate.ToString()</td>
+                                                <td>@UtilString.GetDay(item.DateCreate)</td>
                                                 <td>
                                                     <div class="dropdown">
                                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-wrench"></i></a>
@@ -224,7 +270,7 @@
                                                 <td>@item.TaiKhoan.Name</td>
                                                 <td>@UtilString.GetMoney(item.Money)</td>
                                                 <td>@item.TyLe.Name</td>
-                                                <td>@item.DateCreate.ToString()</td>
+                                                <td>@UtilString.GetDay(item.DateCreate)</td>
                                                 <td>
                                                     <div class="dropdown">
                                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-wrench"></i></a>

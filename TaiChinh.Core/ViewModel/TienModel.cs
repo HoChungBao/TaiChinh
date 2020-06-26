@@ -8,16 +8,21 @@ namespace TaiChinh.Core.ViewModel
 {
     public class TienModel
     {
+        //Lấy tất cả thu một năm
         public List<Thu> MoneyThuInYear { get; set; }
+        //Lấy tất cả thu một tháng
         public List<Thu> MoneyThuInMonth { get; set; }
+        //Lấy tất cả thu một ngày
         public List<Thu> MoneyThuInToDay { get; set; }
-        public List<TyLeMoney> TyLeThuInMonth { get; set; }
-        public List<TyLeMoney> TyLeThuInToDay { get; set; }
+        //public List<TyLeMoney> TyLeThuInMonth { get; set; }
+        //public List<TyLeMoney> TyLeThuInToDay { get; set; }
         public List<Chi> MoneyChiInYear { get; set; }
         public List<Chi> MoneyChiInMonth { get; set; }
         public List<Chi> MoneyChiInToDay { get; set; }
-        public List<TyLeMoney> TyLeChiInMonth { get; set; }
-        public List<TyLeMoney> TyLeChiInToDay { get; set; }
+        //Lấy tỷ lệ chi từng tháng, ngày
+        public List<TyLeMoney> TyLeChi { get; set; }
+        //public List<TyLeMoney> TyLeChiInToDay { get; set; }
+        public List<TyLe> TyLe { get; set; }
         public decimal ToTalMoneyThuInYear { get => MoneyThuInYear.Sum(x => x.Money) ?? 0; }
         public decimal ToTalMoneyChiInYear { get => MoneyChiInYear.Sum(x => x.Money) ?? 0; }
 

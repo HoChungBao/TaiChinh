@@ -1,4 +1,5 @@
 ﻿@model List<TaiChinh.Core.Entities.Chi>
+@using TaiChinh.Util
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -69,23 +70,23 @@
                                         <tbody>
                                             @foreach (var item in Model)
                                             {
-                                            <tr>
-                                                <td>@item.Name</td>
-                                                <td>@item.TaiKhoan.Name</td>
-                                                <td>@item.Money</td>
-                                                <td>@item.DateCreate?.ToString("dd/MM/yyyy")</td>
-                                                <td>@item.TyLe.Name</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                                        <ul class="dropdown-menu" role="menu">
-                                                            <li>
-                                                                <a class="dropdown-item" href="@Url.Action("Update",item.Id)">Update</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                <tr>
+                                                    <td>@item.Name</td>
+                                                    <td>@item.TaiKhoan.Name</td>
+                                                    <td>@item.Money</td>
+                                                    <td>@UtilString.GetDay(item.DateCreate)</td>
+                                                    <td>@item.TyLe.Name</td>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                                            <ul class="dropdown-menu" role="menu">
+                                                                <li>
+                                                                    <a class="dropdown-item" href="@Url.Action("Update",item.Id)">Update</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                             }
                                         </tbody>
                                     </table>

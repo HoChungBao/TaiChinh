@@ -49,5 +49,53 @@ namespace TaiChinh.Core.Serviece
             _context.SaveChanges();
             return entity;
         }
+
+        public List<TyLe> GetAllTyLeByMonth()
+        {
+            return _context.TyLe.Where(x=>x.DateCreate.Value.Month==DateTime.Now.Month).ToList();
+        }
+
+        public void Insert()
+        {
+            var tyle = new List<TyLe>();
+            tyle.Add(new TyLe()
+            {
+                Name = "Tiết Kiệm",
+                Amount = 20,
+                DateCreate= DateTime.Now,
+            });
+            tyle.Add(new TyLe()
+            {
+                Name = "Ăn uống",
+                Amount = 20,
+                DateCreate= DateTime.Now,
+            });
+            tyle.Add(new TyLe()
+            {
+                Name = "Mua đồ",
+                Amount = 20,
+                DateCreate = DateTime.Now,
+            });
+            tyle.Add(new TyLe()
+            {
+                Name = "Đi chơi",
+                Amount = 10,
+                DateCreate = DateTime.Now,
+            });
+            tyle.Add(new TyLe()
+            {
+                Name = "Chỗ ở",
+                Amount = 20,
+                DateCreate = DateTime.Now,
+            });
+            tyle.Add(new TyLe()
+            {
+                Name = "Phương tiện",
+                Amount = 10,
+                DateCreate = DateTime.Now,
+            });
+            _context.TyLe.AddRange(tyle);
+            _context.SaveChanges();
+        }
     }
 }

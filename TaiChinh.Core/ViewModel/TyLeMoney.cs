@@ -6,10 +6,11 @@ namespace TaiChinh.Core.ViewModel
 {
     public class TyLeMoney
     {
-        public long Id { get; set; }
         public string Name { get; set; }
-        public int Amount { get; set; }
-        public decimal Money { get; set; }
+        public decimal? MoneyChiInMonth { get; set; }
+        public decimal? MoneyChiMonth { get; set; }
+        public decimal? MoneyChiInToDay { get; set; }
+        public decimal? MoneyChiToDay { get; set; }
 
     }
 }

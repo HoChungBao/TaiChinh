@@ -25,6 +25,8 @@ namespace TaiChinh
         [HttpGet]
         public IActionResult Create()
         {
+            var tyle = _tyLeService.GetAllTyLeByMonth();
+            ViewBag.Total= 100 - tyle.Sum(x => x.Amount);
             return View();
         }
 
@@ -39,7 +41,7 @@ namespace TaiChinh
                     Amount = model.Amount
                 };
                 _tyLeService.InsertTyLe(tyLe);
-                return View("Create", tyLe);
+                return View(tyLe);
             }
             catch (Exception)
             {
@@ -63,7 +65,7 @@ namespace TaiChinh
                 tyLe.Name = model.Name;
                 tyLe.Amount = model.Amount;
                 _tyLeService.UpdateTyLe(tyLe);
-                return View("Update", tyLe);
+                return View(tyLe);
             }
             catch (Exception)
             {
