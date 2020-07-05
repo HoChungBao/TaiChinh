@@ -38,7 +38,8 @@ namespace TaiChinh
                 var tyLe = new TyLe()
                 {
                     Name = model.Name,
-                    Amount = model.Amount
+                    Amount = model.Amount,
+                    IsUse=model.IsUse,
                 };
                 _tyLeService.InsertTyLe(tyLe);
                 return View(tyLe);
@@ -64,6 +65,7 @@ namespace TaiChinh
                 var tyLe = _tyLeService.GetTyLeById(model.Id);
                 tyLe.Name = model.Name;
                 tyLe.Amount = model.Amount;
+                tyLe.IsUse = model.IsUse;
                 _tyLeService.UpdateTyLe(tyLe);
                 return View(tyLe);
             }

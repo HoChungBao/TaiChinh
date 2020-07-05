@@ -10,5 +10,6 @@ namespace TaiChinh.Core.Model
         public string Name { get; set; }
         public int? Amount { get; set; }
         public DateTime? DateCreate { get; set; }
+        public bool? IsUse { get; set; }
     }
 }

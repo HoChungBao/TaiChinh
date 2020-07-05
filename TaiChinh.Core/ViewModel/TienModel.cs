@@ -21,6 +21,7 @@ namespace TaiChinh.Core.ViewModel
         public List<Chi> MoneyChiInToDay { get; set; }
         //Lấy tỷ lệ chi từng tháng, ngày
         public List<TyLeMoney> TyLeChi { get; set; }
+        public List<TyLeMoney> TyLeChiDay { get; set; }
         //public List<TyLeMoney> TyLeChiInToDay { get; set; }
         public List<TyLe> TyLe { get; set; }
         public decimal ToTalMoneyThuInYear { get => MoneyThuInYear.Sum(x => x.Money) ?? 0; }

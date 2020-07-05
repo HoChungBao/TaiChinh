@@ -14,6 +14,7 @@ namespace TaiChinh.Core.Entities
         public long Id { get; set; }
         public string Name { get; set; }
         public int? Amount { get; set; }
+        public bool? IsUse { get; set; }
         public DateTime? DateCreate { get; set; }
 
         public virtual ICollection<Chi> Chi { get; set; }

@@ -61,6 +61,7 @@ namespace TaiChinh
 
             tien.TyLe = GetTyLe();
             tien.TyLeChi = GetTyLeChi(tien.ToTalMoneyThuInMonth, tien.ToTalMoneyChiToDay, tien.MoneyChiInMonth);
+            tien.TyLeChiDay=GetChi(tien.ToTalMoneyThuInMonth, tien.ToTalMoneyChiToDay, tien.MoneyChiInMonth, date);
             return View(tien);
         }
 
@@ -151,7 +152,7 @@ namespace TaiChinh
         {
             return _tyLeService.GetAllTyLeByMonth();
         }
-        //Lấy tiền chi
+        //Lấy tiền được chi
         public List<TyLeMoney> GetTyLeChi(decimal ToTalMoneyThuInMonth, decimal ToTalMoneyChiToDay,List<Chi> MoneyChiInMonth)
         {
             var listTyLeMoney = new List<TyLeMoney>();
@@ -171,5 +172,29 @@ namespace TaiChinh
             return listTyLeMoney;
         }
 
+        //Lấy tiền được chi
+        //ToTalMoneyThuInMonth tiền còn lại trong một tháng= tổng thu - tổng chi
+        //ToTalMoneyChiToDay tiền còn lại trong một ngày=ToTalMoneyThuInMonth/ ngày còn lại
+        public List<TyLeMoney> GetChi(decimal ToTalMoneyThuInMonth, decimal ToTalMoneyChiToDay, List<Chi> MoneyChiInMonth,DateTime date)
+        {
+            var listTyLeMoney = new List<TyLeMoney>();
+            var ToTalMoneyThuMonth = ToTalMoneyThuInMonth - MoneyChiInMonth.Sum(x => x.Money);
+            var day = DateTime.DaysInMonth(date.Year, date.Month);
+            var MoneyChiToDay = ToTalMoneyThuMonth / (day - date.Day + 1);
+            GetTyLe().ForEach(x =>
+            {
+                var money = x.IsUse == false ? (ToTalMoneyThuInMonth * x.Amount) / 100 : (ToTalMoneyThuMonth * x.Amount) / 100;
+                var tyLeMoney = new TyLeMoney()
+                {
+                    Name = x.Name,
+                    MoneyChiInMonth = money, // Tiền được chi một tháng :Tổng tiền thu một tháng/tỷ lệ
+                    MoneyChiMonth = MoneyChiInMonth.Where(i => i.TyLeId == x.Id && i.DateCreate.Value.Date == DateTime.Now.Date).Sum(i => i.Money), //*Tiền chi một tháng  :Tổng tiền chi một tháng
+                    MoneyChiInToDay = MoneyChiToDay,//Tiền được chi một ngày :Tổng tiền thu một ngày/tỷ lệ
+                    MoneyChiToDay = MoneyChiInMonth.Where(i => i.TyLeId == x.Id && i.DateCreate.Value.Day == DateTime.Now.Day).Sum(i => i.Money),//Tiền chi một ngày :Tổng tiền chi một ngày
+                };
+                listTyLeMoney.Add(tyLeMoney);
+            });
+            return listTyLeMoney;
+        }
     }
 }
