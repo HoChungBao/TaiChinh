@@ -1,0 +1,34 @@
+﻿@using Infrastructure.Util
+@using Food.Core.Entities
+@model ReflectionIT.Mvc.Paging.IPagingList<Category>
+<table id="datatable" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>Tên</th>
+            <th>Danh mục</th>
+            <th>Ngày tạo</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.CategoryNavigation?.Name</td>
+                <td>@StringUtil.GetDay(item.Date)</td>
+                <td>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a class="dropdown-item" href="@Url.Action("Update",item.Id)">Update</a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

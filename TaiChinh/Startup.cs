@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
+//using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +16,11 @@ using TaiChinh.Core.Interface;
 using TaiChinh.Core.Entities;
 using TaiChinh.Core.Serviece;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Food.Core.Entities;
+using Data.Core.Data;
+using Food.Core.Interfaces;
+using Food.Core.Services;
+using Data.Core;
 
 namespace TaiChinh
 {
@@ -34,16 +39,33 @@ namespace TaiChinh
             services.AddDbContext<TaiChinhContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("TaiChinhConnection")));
+
+            services.AddDbContext<FoodContext>(options =>
+               options.UseSqlServer(
+                   Configuration.GetConnectionString("FoodConnection")));
+
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddMvc();  
             services.AddRazorPages();
 
             //Service
+
+            //Finace
             services.AddScoped<ITaiKhoanService, TaiKhoanService>();
             services.AddScoped<IChiService, ChiService>();
             services.AddScoped<IThuService, ThuService>();
             services.AddScoped<ITyLeService, TyLeService>();
+
+            //Food
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IVegetableService, VegetableService>();
+            services.AddScoped(typeof(ISlugService<,>), typeof(SlugService<,>));
+            //Reponsitory
+            services.AddScoped(typeof(IRepositoryWithTypedId<,>), typeof(RepositoryWithTypedId<,>));
+
+            services.AddOrchardCore()
+                .AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,10 +95,10 @@ namespace TaiChinh
             {
                 endpoints.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=DashBoard}/{action=Index}/{id?}");
             });
 
-
+            app.UseOrchardCore();
         }
     }
 }

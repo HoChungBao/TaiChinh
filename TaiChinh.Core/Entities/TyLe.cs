@@ -8,16 +8,15 @@ namespace TaiChinh.Core.Entities
         public TyLe()
         {
             Chi = new HashSet<Chi>();
-            Thu = new HashSet<Thu>();
         }
 
         public long Id { get; set; }
         public string Name { get; set; }
         public int? Amount { get; set; }
-        public bool? IsUse { get; set; }
         public DateTime? DateCreate { get; set; }
 
+        public bool? IsUse { get; set; }
+
         public virtual ICollection<Chi> Chi { get; set; }
-        public virtual ICollection<Thu> Thu { get; set; }
     }
 }

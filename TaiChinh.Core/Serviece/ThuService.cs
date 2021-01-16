@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using TaiChinh.Core.Entities;
 using TaiChinh.Core.Interface;
 
@@ -17,41 +18,52 @@ namespace TaiChinh.Core.Serviece
             _context = context;
         }
 
-        public Thu DeleteThu(Thu entity)
+        public Task<Thu> DeleteThu(Thu entity)
         {
             _context.Thu.Remove(entity);
             _context.SaveChanges();
-            return entity;
+            return Task.FromResult(entity);
         }
 
-        public List<Thu> GetAllThu()
+        public Task<List<Thu>> GetAllThu()
         {
-            return _context.Thu.Include(x=>x.TaiKhoan).ToList();
+            return _context.Thu.Include(x=>x.TaiKhoan).ToListAsync();
         }
 
-        public Thu GetThuById(long id)
+        public Task<Thu> GetThuById(long id)
         {
-            return _context.Thu.FirstOrDefault(x => x.Id == id);
+            return _context.Thu.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public List<Thu> GetThuFromTo(DateTime dateF, DateTime dateT)
+        public Task<List<Thu>> GetThuFromTo(DateTime dateF, DateTime dateT)
         {
-            return _context.Thu.Include(x=>x.TaiKhoan).Include(x => x.TyLe).Where(x => x.DateCreate.Value.Date >= dateF.Date && dateT.Date >= x.DateCreate.Value.Date).ToList();
+            return _context.Thu
+                .Include(x=>x.TaiKhoan)
+                .Where(x => x.DateCreate.Value.Date >= dateF.Date 
+                            && dateT.Date >= x.DateCreate.Value.Date)
+                .ToListAsync();
         }
 
-        public Thu InsertThu(Thu entity)
+        public Task<Thu> InsertThu(Thu entity)
         {
             entity.DateCreate = DateTime.Now;
             _context.Thu.Add(entity);
             _context.SaveChanges();
-            return entity;
+            return Task.FromResult(entity);
         }
 
-        public Thu UpdateThu(Thu entity)
+        public Task<Thu> UpdateThu(Thu entity)
         {
             _context.Thu.Update(entity);
             _context.SaveChanges();
-            return entity;
+            return Task.FromResult(entity);
+        }
+        public Task<List<Thu>> GetThuByMonth(int month)
+        {
+            return _context.Thu
+                .Include(x => x.TaiKhoan)
+                .Where(x => x.DateCreate.Value.Month ==month)
+                .ToListAsync();
         }
     }
 }

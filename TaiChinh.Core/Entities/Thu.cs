@@ -10,9 +10,9 @@ namespace TaiChinh.Core.Entities
         public decimal? Money { get; set; }
         public DateTime? DateCreate { get; set; }
         public long? TaiKhoanId { get; set; }
-        public long? TyLeId { get; set; }
+        public long? TaiKoanChuyenId { get; set; }
 
         public virtual TaiKhoan TaiKhoan { get; set; }
-        public virtual TyLe TyLe { get; set; }
+        public virtual TaiKhoan TaiKoanChuyen { get; set; }
     }
 }

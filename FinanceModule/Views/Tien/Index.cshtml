@@ -1,0 +1,385 @@
+﻿@using Infrastructure.Util
+@model TaiChinh.Core.ViewModel.TienModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Name = "_Script";
+    var date = DateTime.Now;
+}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+
+        <!-- top tiles -->
+        <div class="row">
+            <div class="tile_count">
+
+                <!-- Tổng thu -->
+                <div class="col-md-4 col-sm-4  tile_stats_count">
+                    <span class="count_top">Tổng thu @date.Year</span>
+                    <div class="count green">@StringUtil.GetVietNameseMoney(Model.ToTalMoneyThuInYear)</div>
+                    <span class="count_bottom"><i class="green"></i></span>
+                </div>
+                <!-- Tổng thu tháng -->
+                <div class="col-md-4 col-sm-4  tile_stats_count">
+                    <span class="count_top">Tổng  thu tháng @date.Month</span>
+                    <div class="count green">@StringUtil.GetVietNameseMoney(Model.ToTalMoneyThuInMonth)</div>
+                    <span class="count_bottom"><i class="green"></i></span>
+                </div>
+                <!-- Tổng còn lại được chi tháng -->
+                <div class="col-md-4 col-sm-4  tile_stats_count">
+                    <span class="count_top">Còn lại được chi trong một tháng</span>
+                    <div class="count green">@StringUtil.GetVietNameseMoney((Model.ToTalMoneyChiMonth - Model.ToTalMoneyChiInMonth))</div>
+                    @*<span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i></i></span>*@
+                </div>
+                <!-- Tổng chi -->
+                <div class="col-md-4 col-sm-4  tile_stats_count">
+                    <span class="count_top">Tổng chi @date.Year</span>
+                    <div class="count red">@StringUtil.GetVietNameseMoney(Model.ToTalMoneyChiInYear)</div>
+                    <span class="count_bottom"><i class="green"></i></span>
+                </div>
+                <!-- Tổng chi tháng -->
+                <div class="col-md-4 col-sm-4  tile_stats_count">
+                    <span class="count_top">Tổng chi tháng @date.Month</span>
+                    <div class="count red">@StringUtil.GetVietNameseMoney(Model.ToTalMoneyChiInMonth)</div>
+                    @*<span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i> </i></span>*@
+                </div>
+                <!-- Tổng còn lại được chi ngày -->
+                <div class="col-md-4 col-sm-4  tile_stats_count">
+                    <span class="count_top">Còn lại được chi trong một ngày</span>
+                    <div class="count red"> @StringUtil.GetVietNameseMoney((Model.ToTalMoneyChiToDay - Model.ToTalMoneyChiInToDay))</div>
+                    @*<span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i></i></span>*@
+                </div>
+                <!-- Tiết kiệm dự kiến -->
+                <div class="col-md-4 col-sm-4  tile_stats_count">
+                    <span class="count_top">Tiết kiệm dự kiến @date.Year</span>
+                    <div class="count green">@StringUtil.GetVietNameseMoney(Model.TotalMoneyNotUseInYear)</div>
+                    <span class="count_bottom"><i class="green"></i></span>
+                </div>
+                <!-- Tiết kiệm -->
+                <div class="col-md-4 col-sm-4  tile_stats_count">
+                    <span class="count_top">Tiết kiệm @date.Year</span>
+                    <div class="count green">@StringUtil.GetVietNameseMoney(Model.ToTalMoneyThuInYear - Model.ToTalMoneyChiInYear)</div>
+                    <span class="count_bottom"><i class="green"></i></span>
+                </div>
+            </div>
+        </div>
+        <!--top tiles-->
+        <!--table-->
+        <div class="row">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Settings 1</a>
+                                    <a class="dropdown-item" href="#">Settings 2</a>
+                                </div>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="x_title">
+                                    <h2>Tiền được chi tiêu</h2>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 ">
+                                    <table class="table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Tên</th>
+                                                <th>Tháng</th>
+                                                <th>Ngày</th>
+                                                @*<th></th>*@
+
+                                            </tr>
+                                        </thead>
+
+
+                                        <tbody>
+                                            @foreach (var item in Model.TyLeChi)
+                                            {
+                                                <tr>
+                                                    <!--Tên tỷ lệ-->
+                                                    <td>
+                                                        @item.Name
+                                                    </td>
+                                                    @*</tr>
+                                                        <tr>*@
+                                                    <!--Tiền được chi tháng-->
+                                                    <td>
+                                                        <span class="text green">@StringUtil.GetVietNameseMoney(item.MoneyChiInMonth)</span>
+                                                    </td>
+                                                    @*<td>
+                                                            @if (item.MoneyChiInMonth > item.MoneyChiMonth)
+                                                            {
+                                                                <span class="btn btn-info">@UtilString.GetVietNameseMoney(item.MoneyChiMonth)</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="btn btn-danger">@UtilString.GetVietNameseMoney(item.MoneyChiMonth)</span>
+                                                            }
+                                                        </td>*@
+                                                    <!--Tiền được chi ngày-->
+                                                    <td>
+                                                        <span class="text green">@StringUtil.GetVietNameseMoney(item.MoneyChiInToDay)</span>
+                                                    </td>
+                                                    @*<td>
+                                                            @if (item.MoneyChiInToDay > item.MoneyChiToDay)
+                                                            {
+                                                                <span class="btn btn-info">@UtilString.GetVietNameseMoney(item.MoneyChiToDay)</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="btn btn-danger">@UtilString.GetVietNameseMoney(item.MoneyChiToDay)</span>
+                                                            }
+                                                        </td>*@
+                                                </tr>
+                                                @*@if (Model.TyLeThuInMonth.Where(x => item.Money > x.Money && item.Id == x.Id).Any())
+                                                    {
+                                                        <div class="">
+                                                            <span class="btn btn-danger">@UtilString.GetMoney(item.Money)</span>
+                                                            <div class="progress progress_sm" style="width: 1234%;">
+                                                                <div class="progress-bar bg-danger" role="progressbar" data-transitiongoal="80" aria-valuenow="79" style="width: 80%;"></div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="">
+                                                            <span class="btn btn-danger">@UtilString.GetMoney(item.Money)</span>
+                                                        </div>
+                                                    }*@
+
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6  bg-white">
+                                <div class="x_title">
+                                    <h2>Tiền chi một ngày</h2>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 ">
+                                    <table class="table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Tên</th>
+                                                <th>Tháng</th>
+                                                <th>Ngày</th>
+                                                @*<th></th>*@
+
+                                            </tr>
+                                        </thead>
+
+
+                                        <tbody>
+                                            @foreach (var item in Model.TyLeChiDay)
+                                            {
+                                                <tr>
+                                                    <!--Tên tỷ lệ-->
+                                                    <td>
+                                                        @item.Name
+                                                    </td>
+                                                    @*</tr>
+                                                        <tr>*@
+                                                    <td>
+                                                        <span class="text green">@StringUtil.GetVietNameseMoney(item.MoneyChiMonth)</span>
+                                                    </td>
+                                                    @*<td>
+                                                            @if (item.MoneyChiInMonth > item.MoneyChiMonth)
+                                                            {
+                                                                <span class="btn btn-info">@UtilString.GetVietNameseMoney(item.MoneyChiMonth)</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="btn btn-danger">@UtilString.GetVietNameseMoney(item.MoneyChiMonth)</span>
+                                                            }
+                                                        </td>*@
+                                                    <td>
+                                                        <span class="text green">@StringUtil.GetVietNameseMoney(item.MoneyChiToDay)</span>
+                                                    </td>
+                                                    @*<td>
+                                                            @if (item.MoneyChiInToDay > item.MoneyChiToDay)
+                                                            {
+                                                                <span class="btn btn-info">@UtilString.GetVietNameseMoney(item.MoneyChiToDay)</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="btn btn-danger">@UtilString.GetVietNameseMoney(item.MoneyChiToDay)</span>
+                                                            }
+                                                        </td>*@
+                                                </tr>
+                                                @*@if (Model.TyLeThuInMonth.Where(x => item.Money > x.Money && item.Id == x.Id).Any())
+                                                    {
+                                                        <div class="">
+                                                            <span class="btn btn-danger">@UtilString.GetMoney(item.Money)</span>
+                                                            <div class="progress progress_sm" style="width: 1234%;">
+                                                                <div class="progress-bar bg-danger" role="progressbar" data-transitiongoal="80" aria-valuenow="79" style="width: 80%;"></div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="">
+                                                            <span class="btn btn-danger">@UtilString.GetMoney(item.Money)</span>
+                                                        </div>
+                                                    }*@
+
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <div class="card-box table-responsive">
+                                <h2>Chi tiêu hôm nay @date.ToString("dd/MM/yy")  @StringUtil.GetVietNameseMoney(Model.ToTalMoneyChiInToDay)</h2>
+                                <table id="datatable" class="table table-striped table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Tên</th>
+                                            <th>Ngân hàng</th>
+                                            <th>Tiền</th>
+                                            <th>Tỷ lệ</th>
+                                            <th>Ngày tạo</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+
+
+                                    <tbody>
+                                        @foreach (var item in Model.MoneyChiInToDay)
+                                        {
+                                            <tr>
+                                                <td>@item.Name</td>
+                                                <td>@item.TaiKhoan.Name</td>
+                                                <td>@StringUtil.GetVietNameseMoney(item.Money)</td>
+                                                <td>@item.TyLe.Name</td>
+                                                <td>@StringUtil.GetDay(item.DateCreate)</td>
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li>
+                                                                <a class="dropdown-item" href="@Url.Action("Update",item.Id)">Update</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <div class="card-box table-responsive">
+                                <h2>Tiền thu một tháng @date.Month</h2>
+                                <table id="datatable" class="table table-striped table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Ngày tạo</th>
+                                            <th>Ngân hàng</th>
+                                            <th>Tiền</th>
+                                            @*<th>Tỷ lệ</th>*@
+                                            <th>Ngày tạo</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+
+
+                                    <tbody>
+                                        @foreach (var item in Model.MoneyThuInMonth)
+                                        {
+                                            <tr>
+                                                <td>@item.Name</td>
+                                                <td>@item.TaiKhoan.Name</td>
+                                                <td>@StringUtil.GetVietNameseMoney(item.Money)</td>
+                                                @*<td>@item.TyLe.Name</td>*@
+                                                <td>@StringUtil.GetDay(item.DateCreate)</td>
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li>
+                                                                <a class="dropdown-item" href="@Url.Action("Update",item.Id)">Update</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 ">
+                            <div class="card-box table-responsive">
+                                <h2>Chi tiêu một tháng @date.Month</h2>
+                                <table id="datatable" class="table table-striped table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Tên</th>
+                                            <th>Ngân hàng</th>
+                                            <th>Tiền</th>
+                                            <th>Tỷ lệ</th>
+                                            <th>Ngày tạo</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+
+
+                                    <tbody>
+                                        @foreach (var item in Model.MoneyChiInMonth)
+                                        {
+                                            <tr>
+                                                <td>@item.Name</td>
+                                                <td>@item.TaiKhoan.Name</td>
+                                                <td>@StringUtil.GetVietNameseMoney(item.Money)</td>
+                                                <td>@item.TyLe.Name</td>
+                                                <td>@StringUtil.GetDay(item.DateCreate)</td>
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li>
+                                                                <a class="dropdown-item" href="@Url.Action("Update",item.Id)">Update</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--table-->
+    </div>
+</div>
+

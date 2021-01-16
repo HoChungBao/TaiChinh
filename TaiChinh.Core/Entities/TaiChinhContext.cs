@@ -32,7 +32,7 @@ namespace TaiChinh.Core.Entities
 //            if (!optionsBuilder.IsConfigured)
 //            {
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-//                optionsBuilder.UseSqlServer("Server=DESKTOP-L5K56G7;Database=TaiChinh;persist security info=True;user id=sa;password=123456");
+//                optionsBuilder.UseSqlServer("Server=DESKTOP-AUC9J69;Database=TaiChinh;Trusted_Connection=True; user=sa;password=123456");
 //            }
         }
 
@@ -173,14 +173,14 @@ namespace TaiChinh.Core.Entities
                 entity.Property(e => e.Name).HasMaxLength(400);
 
                 entity.HasOne(d => d.TaiKhoan)
-                    .WithMany(p => p.Thu)
+                    .WithMany(p => p.ThuTaiKhoan)
                     .HasForeignKey(d => d.TaiKhoanId)
                     .HasConstraintName("FK_Thu_TaiKhoan");
 
-                entity.HasOne(d => d.TyLe)
-                    .WithMany(p => p.Thu)
-                    .HasForeignKey(d => d.TyLeId)
-                    .HasConstraintName("FK_Thu_TyLe");
+                entity.HasOne(d => d.TaiKoanChuyen)
+                    .WithMany(p => p.ThuTaiKoanChuyen)
+                    .HasForeignKey(d => d.TaiKoanChuyenId)
+                    .HasConstraintName("FK_Thu_TaiKhoan1");
             });
 
             modelBuilder.Entity<TyLe>(entity =>

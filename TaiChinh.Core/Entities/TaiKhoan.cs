@@ -8,7 +8,8 @@ namespace TaiChinh.Core.Entities
         public TaiKhoan()
         {
             Chi = new HashSet<Chi>();
-            Thu = new HashSet<Thu>();
+            ThuTaiKhoan = new HashSet<Thu>();
+            ThuTaiKoanChuyen = new HashSet<Thu>();
         }
 
         public long Id { get; set; }
@@ -18,6 +19,7 @@ namespace TaiChinh.Core.Entities
         public bool? IsCash { get; set; }
 
         public virtual ICollection<Chi> Chi { get; set; }
-        public virtual ICollection<Thu> Thu { get; set; }
+        public virtual ICollection<Thu> ThuTaiKhoan { get; set; }
+        public virtual ICollection<Thu> ThuTaiKoanChuyen { get; set; }
     }
 }
