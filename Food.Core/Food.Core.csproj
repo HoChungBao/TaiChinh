@@ -15,6 +15,18 @@
     <Compile Remove="Migrations\20210112160304_UpdateKeyCategory.Designer.cs" />
     <Compile Remove="Migrations\20210112160641_UpdateKeyCategory.cs" />
     <Compile Remove="Migrations\20210112160641_UpdateKeyCategory.Designer.cs" />
+    <Compile Remove="Migrations\20210116145004_CreateTablePrice.cs" />
+    <Compile Remove="Migrations\20210116145004_CreateTablePrice.Designer.cs" />
+    <Compile Remove="Migrations\20210118154309_CreateTablePrice.cs" />
+    <Compile Remove="Migrations\20210118154309_CreateTablePrice.Designer.cs" />
+    <Compile Remove="Migrations\20210118154904_CreateTablePrice.cs" />
+    <Compile Remove="Migrations\20210118154904_CreateTablePrice.Designer.cs" />
+    <Compile Remove="Migrations\20210118155131_CreateTablePrice.cs" />
+    <Compile Remove="Migrations\20210118155131_CreateTablePrice.Designer.cs" />
+    <Compile Remove="Migrations\20210118160001_CreateTablePrice.cs" />
+    <Compile Remove="Migrations\20210118160001_CreateTablePrice.Designer.cs" />
+    <Compile Remove="Migrations\20210120152843_UpdateTablePrice.cs" />
+    <Compile Remove="Migrations\20210120152843_UpdateTablePrice.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

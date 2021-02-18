@@ -1,7 +1,9 @@
 ﻿using Food.Core.Interfaces;
 using Infrastructure.Extensions.Validators;
 using Infrastructure.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using System;
@@ -13,9 +15,11 @@ using VegetableFruitModule.Validators;
 
 namespace VegetableFruitModule.Admin
 {
+    [Authorize(Policy = "Admin")]
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
+        //private readonly Iuser _categoryService;
         public CategoryController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
@@ -45,7 +49,7 @@ namespace VegetableFruitModule.Admin
         // POST: CategoryController/Create
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(CategoryPostModel model)
+        public async Task<IActionResult> Create(CategoryPostModel model)
         {
             var rs =new HttpContentResult<dynamic>();
             try
@@ -60,7 +64,8 @@ namespace VegetableFruitModule.Admin
                 }
 
                 var category = model.InstanceEntity();
-                _categoryService.AddAsync(category);
+                //category.User = User.Identity.Name;
+                await _categoryService.AddAsync(category);
                 rs.Success();
                 rs.Message = MessageResultJson.Success;
                 return Json(rs);

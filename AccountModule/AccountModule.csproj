@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="OrchardCore.Module.Targets" Version="1.0.0-rc2-13450" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TaiChinh.Core\TaiChinh.Core.csproj" />
+  </ItemGroup>
+
+</Project>

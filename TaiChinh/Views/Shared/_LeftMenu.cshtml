@@ -23,7 +23,7 @@
         <!-- sidebar menu -->
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             <div class="menu_section">
-                <h3>General</h3>
+                <h3>Tài chính</h3>
                 <ul class="nav side-menu">
                     <li>
                         <a><i class="fa fa-home"></i>Tài Khoản <span class="fa fa-chevron-down"></span></a>
@@ -53,6 +53,11 @@
                             <li><a href="@Url.Action("Index","TyLe")">Danh sách</a></li>
                         </ul>
                     </li>
+                </ul>
+            </div>
+            <div class="menu_section">
+                <h3>Trái cây</h3>
+                <ul class="nav side-menu">
                     <li>
                         <a><i class="fa fa-bar-chart-o"></i>Danh mục<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
@@ -62,8 +67,29 @@
                     </li>
                     <li>
                         <a><i class="fa fa-clone"></i>Trái cây <span class="fa fa-chevron-down"></span></a>
-                    <li><a href="@Url.Action("Create","VegetableFruit")">Tạo mới</a></li>
-                    <li><a href="@Url.Action("Index","VegetableFruit")">Danh sách</a></li>
+                        <ul class="nav child_menu">
+                            <li><a href="@Url.Action("Create","VegetableFruit")">Tạo mới</a></li>
+                            <li><a href="@Url.Action("Index","VegetableFruit")">Danh sách</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="menu_section">
+                <h3>Vàng</h3>
+                <ul class="nav side-menu">
+                    <li>
+                        <a><i class="fa fa-clone"></i>Sự kiện <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="@Url.Action("Create","Events")">Tạo mới</a></li>
+                            <li><a href="@Url.Action("Index","Events")">Danh sách</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa fa-clone"></i>Cấp độ <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="@Url.Action("Create","PointEvents")">Tạo mới</a></li>
+                            <li><a href="@Url.Action("Index","PointEvents")">Danh sách</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>

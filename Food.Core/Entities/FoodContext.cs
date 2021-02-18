@@ -17,6 +17,7 @@ namespace Food.Core.Entities
 
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<VegetableFruit> VegetableFruit { get; set; }
+        public virtual DbSet<Price> Price { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -31,7 +32,7 @@ namespace Food.Core.Entities
         {
             modelBuilder.Entity<Category>(entity =>
             {
-                //entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.HasKey(e => e.Id).HasName("Id");
 
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
@@ -47,7 +48,7 @@ namespace Food.Core.Entities
             {
                 entity.ToTable("Vegetable_Fruit");
 
-                //entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.HasKey(e => e.Id).HasName("Id");
 
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
@@ -57,6 +58,21 @@ namespace Food.Core.Entities
                     .WithMany(p => p.VegetableFruit)
                     .HasForeignKey(d => d.CategoryId)
                     .HasConstraintName("FK_Vegetable_Fruit_Category");
+            });
+
+            modelBuilder.Entity<Price>(entity =>
+            {
+                entity.ToTable("Price");
+                entity.HasKey(e => e.Id).HasName("Id");
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.Name).HasMaxLength(200);
+
+                entity.HasOne(d => d.VegetableFruit)
+                      .WithMany(p => p.InversePriceNavigation)
+                      .HasForeignKey(d => d.VegetableFruitId)
+                      .HasConstraintName("FK_Price_Vegetable_Fruit");
             });
 
             OnModelCreatingPartial(modelBuilder);

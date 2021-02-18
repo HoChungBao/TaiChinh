@@ -22,9 +22,11 @@ namespace Food.Core.Entities
         public DateTime? Date { get; set; }
         public Guid? User { get; set; }
         public long? CategoryId { get; set; }
-
+        //[ForeignKey("CategoryId")]
         public virtual Category CategoryNavigation { get; set; }
+        //[InverseProperty("Category")]
         public virtual ICollection<Category> InverseCategoryNavigation { get; set; }
+        //[InverseProperty("Category")]
         public virtual ICollection<VegetableFruit> VegetableFruit { get; set; }
     }
 }

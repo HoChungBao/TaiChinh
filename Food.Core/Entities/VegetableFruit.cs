@@ -7,6 +7,10 @@ namespace Food.Core.Entities
 {
     public partial class VegetableFruit
     {
+        public VegetableFruit()
+        {
+            InversePriceNavigation = new HashSet<Price>();
+        }
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
@@ -23,5 +27,6 @@ namespace Food.Core.Entities
         public long? CategoryId { get; set; }
 
         public virtual Category Category { get; set; }
+        public virtual ICollection<Price> InversePriceNavigation { get; set; }
     }
 }

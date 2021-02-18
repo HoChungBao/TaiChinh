@@ -349,6 +349,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\Validators\ValidationResultExtension.cs" />
+    <Compile Include="Models\ComponentViewModels\ComponentViewFlag.cs" />
     <Compile Include="Models\HttpContentResult.cs" />
     <Compile Include="Models\IEntityWithTypedId.cs" />
     <Compile Include="Models\UploadFile.cs" />

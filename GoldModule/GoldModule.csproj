@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="7.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="OrchardCore.Module.Targets" Version="1.0.0-rc2-13450" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Gold.Core\Gold.Core.csproj" />
+  </ItemGroup>
+  
+</Project>

@@ -1,0 +1,102 @@
+﻿@using Gold.Core.Interfaces
+@inject IPointEventService PointEventService
+
+<form method="post" action="Create" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+    <!--Name-->
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">
+            Tên sự kiện <span class="required">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+            <input type="text" name="Name" id="first-name" required="required" class="form-control ">
+        </div>
+    </div>
+
+    <!--Point-->
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">
+            Điểm<span class="required">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+            <select class="form-control" name="Point">
+                <option value="" selected>Chọn cấp độ</option>
+                @foreach (var item in await PointEventService.GetAllAsync())
+                {
+                    <option value="@item.Point">@item.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <!--Field-->
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">
+            Lĩnh vực<span class="required">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+            <select class="form-control" name="Field">
+                <option value="Chính trị">Chính trị</option>
+                <option value="Kinh tế">Kinh tế</option>
+                <option value="Xã hội">Xã hội</option>
+                <option value="Khác">Khác</option>
+            </select>
+        </div>
+    </div>
+
+    <!--IsPositiveFake-->
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">
+            Dự đoán <span class="required">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+            <select class="form-control" name="IsPositiveFake">
+                <option value="true">Tăng</option>
+                <option value="false">Giảm</option>
+            </select>
+        </div>
+    </div>
+
+    <!--IsWorld-->
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">
+            Thế giới? <span class="required">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+            <select class="form-control" name="IsWorld">
+                <option value="true">Thế giới</option>
+                <option value="false">Trong nước</option>
+            </select>
+        </div>
+    </div>
+
+    <!--Url-->
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">
+            Đường dẫn <span class="required">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+            <input type="text" name="Url" id="first-name" required="required" class="form-control ">
+        </div>
+    </div>
+
+    <!--IsGood-->
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">
+            Sự kiến tốt? <span class="required">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+            <select class="form-control" name="IsGood">
+                <option value="true">Tốt</option>
+                <option value="false">Không tốt</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="ln_solid"></div>
+    <div class="item form-group">
+        <div class="col-md-6 col-sm-6 offset-md-3">
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </div>
+</form>

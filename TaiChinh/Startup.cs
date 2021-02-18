@@ -21,6 +21,10 @@ using Data.Core.Data;
 using Food.Core.Interfaces;
 using Food.Core.Services;
 using Data.Core;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using AccountModule.Models.AccountViewModels;
+using GoldModule.Extensions;
+using Gold.Core.Entities;
 
 namespace TaiChinh
 {
@@ -44,6 +48,55 @@ namespace TaiChinh
                options.UseSqlServer(
                    Configuration.GetConnectionString("FoodConnection")));
 
+            services.AddDbContext<ApplicationDbContext>(options =>
+                  options.UseSqlServer(
+                 Configuration.GetConnectionString("TaiChinhConnection")));
+
+            services.AddDbContext<GoldContext>(options =>
+                  options.UseSqlServer(
+                 Configuration.GetConnectionString("GoldConnection")));
+
+            services.AddIdentityCore<ApplicationUser>()
+                  .AddRoles<IdentityRole>()
+                  .AddEntityFrameworkStores<ApplicationDbContext>()
+                  .AddSignInManager()
+                  .AddDefaultTokenProviders();
+
+            services.AddAuthentication(o =>
+            {
+                o.DefaultScheme = IdentityConstants.ApplicationScheme;
+                o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+            })
+            .AddIdentityCookies(o => { });
+
+
+            //[Authorize(AuthenticationSchemes = AuthSchemes)]
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddCookie(options =>
+                    {
+                        options.LoginPath = "/Account/Unauthorized/";
+                        options.AccessDeniedPath = "/Account/Forbidden/";
+                    })
+                    .AddJwtBearer(options =>
+                    {
+                        options.Audience = "http://localhost:5001/";
+                        options.Authority = "http://localhost:5000/";
+                        options.RequireHttpsMetadata = false;
+                    });
+
+            //[Authorize(Policy = "Over18")]
+            //
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin", policy =>
+                {
+                    //policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                    policy.AuthenticationSchemes.Add(IdentityConstants.ApplicationScheme);
+                    policy.RequireAuthenticatedUser();
+                    //policy.Requirements.Add(new MinimumAgeRequirement());
+                });
+            });
+
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddMvc();  
@@ -61,6 +114,10 @@ namespace TaiChinh
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IVegetableService, VegetableService>();
             services.AddScoped(typeof(ISlugService<,>), typeof(SlugService<,>));
+
+            //Gold
+            services.AddServicesGold();
+
             //Reponsitory
             services.AddScoped(typeof(IRepositoryWithTypedId<,>), typeof(RepositoryWithTypedId<,>));
 

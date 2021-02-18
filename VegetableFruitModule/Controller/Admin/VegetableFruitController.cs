@@ -1,6 +1,7 @@
 ﻿using Food.Core.Interfaces;
 using Infrastructure.Extensions.Validators;
 using Infrastructure.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using VegetableFruitModule.Validators;
 
 namespace VegetableFruitModule.Admin
 {
+    [Authorize(Policy = "Admin")]
     public class VegetableFruitController : Controller
     {
         private readonly IVegetableService _vegetableService;
@@ -35,7 +37,7 @@ namespace VegetableFruitModule.Admin
         // POST: VegetableFruitController/Create
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(VegetableFruitPostModel model)
+        public async Task<IActionResult> Create(VegetableFruitPostModel model)
         {
             var rs = new HttpContentResult<dynamic>();
             try
@@ -50,7 +52,7 @@ namespace VegetableFruitModule.Admin
                 }
 
                 var vegertablefruit = model.InstanceEntity();
-                _vegetableService.AddAsync(vegertablefruit);
+                await _vegetableService.AddAsync(vegertablefruit);
                 rs.Success();
                 rs.Message = MessageResultJson.Success;
                 return Json(rs);

@@ -1,0 +1,7 @@
+﻿@{
+    ViewData["Title"] = "Biểu đồ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Name = "_Script";
+}
+
+@Html.Partial("_LayoutChart", ViewBag.ViewComponent as string)

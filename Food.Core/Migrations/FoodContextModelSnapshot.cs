@@ -22,7 +22,9 @@ namespace Food.Core.Migrations
             modelBuilder.Entity("Food.Core.Entities.Category", b =>
                 {
                     b.Property<long>("Id")
-                        .HasColumnType("bigint");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<long?>("CategoryId")
                         .HasColumnType("bigint");
@@ -36,22 +38,54 @@ namespace Food.Core.Migrations
                         .HasMaxLength(200);
 
                     b.Property<string>("Slug")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<Guid?>("User")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("Id");
 
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Category");
                 });
 
+            modelBuilder.Entity("Food.Core.Entities.Price", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<long>("VegetableFruitId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id")
+                        .HasName("Id");
+
+                    b.HasIndex("VegetableFruitId");
+
+                    b.ToTable("Price");
+                });
+
             modelBuilder.Entity("Food.Core.Entities.VegetableFruit", b =>
                 {
                     b.Property<long>("Id")
-                        .HasColumnType("bigint");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<long?>("CategoryId")
                         .HasColumnType("bigint");
@@ -71,7 +105,8 @@ namespace Food.Core.Migrations
                         .HasMaxLength(200);
 
                     b.Property<string>("Slug")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<bool?>("Status")
                         .HasColumnType("bit");
@@ -82,7 +117,8 @@ namespace Food.Core.Migrations
                     b.Property<string>("VideoLink")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("Id");
 
                     b.HasIndex("CategoryId");
 
@@ -95,6 +131,16 @@ namespace Food.Core.Migrations
                         .WithMany("InverseCategoryNavigation")
                         .HasForeignKey("CategoryId")
                         .HasConstraintName("FK_Category_Category");
+                });
+
+            modelBuilder.Entity("Food.Core.Entities.Price", b =>
+                {
+                    b.HasOne("Food.Core.Entities.VegetableFruit", "VegetableFruit")
+                        .WithMany("InversePriceNavigation")
+                        .HasForeignKey("VegetableFruitId")
+                        .HasConstraintName("FK_Price_Vegetable_Fruit")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Food.Core.Entities.VegetableFruit", b =>

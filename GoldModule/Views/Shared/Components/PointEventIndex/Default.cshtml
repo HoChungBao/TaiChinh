@@ -1,0 +1,32 @@
+﻿@using Infrastructure.Util
+@using Gold.Core.Entities
+@model ReflectionIT.Mvc.Paging.IPagingList<PointEvent>
+<table id="datatable" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>Tên cấp độ</th>   
+            <th>Điểm</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Point</td>
+            <td>
+                <div class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a class="dropdown-item" href="@Url.Action("Update",item.Id)">Update</a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
